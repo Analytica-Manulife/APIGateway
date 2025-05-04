@@ -1,5 +1,7 @@
 using ApiGateway.Services;
 using Microsoft.AspNetCore.Mvc;
+using APIGateWay.Model;
+using System.Threading.Tasks;
 
 namespace ApiGateway.Controllers
 {
@@ -7,18 +9,39 @@ namespace ApiGateway.Controllers
     [Route("auth")]
     public class AuthController : ControllerBase
     {
+        private readonly AuthService _authService;
         private readonly SessionService _sessionService;
 
-        public AuthController(SessionService sessionService)
+        public AuthController(AuthService authService, SessionService sessionService)
         {
+            _authService = authService;
             _sessionService = sessionService;
         }
 
-        [HttpPost("login")]
-        public IActionResult Login(string userId)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] UserRegisterRequest request)
         {
-            _sessionService.Login(userId);
-            return Ok("User logged in.");
+            var (success, message) = await _authService.Register(request.Name, request.Email, request.Password);
+            if (!success)
+                return BadRequest(message);
+
+            return Ok(message);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
+        {
+            var (success, message, email, name, balance) = await _authService.Login(request.Email, request.Password);
+            if (!success)
+                return Unauthorized(message);
+
+            return Ok(new
+            {
+                Message = message,
+                Email = email,
+                Name = name,
+                Balance = balance
+            });
         }
 
         [HttpPost("logout")]

@@ -20,14 +20,14 @@ namespace ApiGateway.Services
             return result ? (true, "Registration successful") : (false, "Registration failed (maybe email already exists)");
         }
 
-        public async Task<(bool Success, string Message, string? Email, string? Name)> Login(string email, string password)
+        public async Task<(bool Success, string Message, string? Email, string? Name, decimal? balance)> Login(string email, string password)
         {
             var account = await _repository.LoginUserAsync(email, password);
             if (account == null)
-                return (false, "Invalid credentials", null, null);
+                return (false, "Invalid credentials", null, null, 0);
 
             _sessionService.Login(account.Email);
-            return (true, "Login successful", account.Email, account.Name);
+            return (true, "Login successful", account.Email, account.Name, account.Balance);
         }
     }
 }
