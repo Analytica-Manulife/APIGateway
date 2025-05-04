@@ -19,14 +19,6 @@ public class Account
         [MaxLength(255)]
         public string Email { get; set; }
 
-        [Column("password")]
-        [Required]
-        [MaxLength(255)]
-        public string Password { get; set; }
-
-        [Column("portfolio")]
-        public string? Portfolio { get; set; }
-
         [Column("balance")]
         [Required]
         public decimal Balance { get; set; } = 0.00M;

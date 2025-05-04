@@ -22,11 +22,15 @@ builder.Services.AddHttpClient("FinanceNewsService", client =>
     client.BaseAddress = new Uri("http://localhost:5203");  // Your downstream API URL
 });
 
-
 // Register custom services
 builder.Services.AddDistributedMemoryCache(); // or Redis, etc.
-builder.Services.AddSession();
-builder.Services.AddHttpContextAccessor(); // Required
+builder.Services.AddSession(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Adjust the timeout
+});
+builder.Services.AddHttpContextAccessor(); // Required for session access
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<AuthRepository>(); // Database access for authentication
@@ -58,6 +62,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
+
+app.UseSession(); // Add this here before MapControllers
 
 app.MapControllers();
 
