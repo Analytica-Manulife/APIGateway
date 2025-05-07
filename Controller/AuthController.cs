@@ -31,7 +31,7 @@ namespace ApiGateway.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
         {
-            var (success, message, email, name, balance) = await _authService.Login(request.Email, request.Password);
+            var (success, message, email, name, balance,accountId) = await _authService.Login(request.Email, request.Password);
             if (!success)
                 return Unauthorized(message);
 
@@ -40,7 +40,8 @@ namespace ApiGateway.Controllers
                 Message = message,
                 Email = email,
                 Name = name,
-                Balance = balance
+                Balance = balance,
+                Account = accountId
             });
         }
 
