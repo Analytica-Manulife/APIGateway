@@ -19,7 +19,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddHttpClient("FinanceNewsService", client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5203");  // Your downstream API URL
+    client.BaseAddress = new Uri("https://news-service-bagzfjc6btd8h5fg.canadacentral-01.azurewebsites.net/"); 
+});
+
+builder.Services.AddHttpClient("BudgetService", client =>
+{
+    client.BaseAddress = new Uri("https://budgetservice-fmgsauf4bgfth4h8.canadacentral-01.azurewebsites.net/");
+});
+
+builder.Services.AddHttpClient("StockMarketService", client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5057");
 });
 
 // Register custom services
