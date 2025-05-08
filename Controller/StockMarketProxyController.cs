@@ -22,7 +22,8 @@ namespace ApiGateway.Controllers;
         [HttpPost("portfolio/buy")]
         public async Task<IActionResult> BuyStock([FromBody] object request) =>
             await ForwardPost("/api/Portfolio/BuyStock", request);
-
+    
+        
         [HttpPost("portfolio/sell")]
         public async Task<IActionResult> SellStock([FromBody] object request) =>
             await ForwardPost("/api/Portfolio/SellStock", request);
