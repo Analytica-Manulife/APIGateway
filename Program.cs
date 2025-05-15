@@ -19,7 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddHttpClient("FinanceNewsService", client =>
 {
-    client.BaseAddress = new Uri("https://news-app-analytica-hcdfg9achuazh7aa.canadacentral-01.azurewebsites.net/"); 
+    client.BaseAddress = new Uri("https://news-service-analytica-bdeue4cgh2fng5bm.canadacentral-01.azurewebsites.net/"); 
 });
 
 builder.Services.AddHttpClient("BudgetService", client =>

@@ -27,10 +27,12 @@ namespace ApiGateway.Repositories
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"Registration error: {ex.Message}");
                 return false;
             }
+
         }
 
         public async Task<Account?> LoginUserAsync(string email, string password)
