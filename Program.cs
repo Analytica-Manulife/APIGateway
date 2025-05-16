@@ -24,12 +24,12 @@ builder.Services.AddHttpClient("FinanceNewsService", client =>
 
 builder.Services.AddHttpClient("BudgetService", client =>
 {
-    client.BaseAddress = new Uri("https://bugdet-app-afc5a2hqbpgscsbs.canadacentral-01.azurewebsites.net/");
+    client.BaseAddress = new Uri("https://budget-service-analytica-hggqf9aphcdycdgz.canadacentral-01.azurewebsites.net/");
 });
 
 builder.Services.AddHttpClient("StockMarketService", client =>
 {
-    client.BaseAddress = new Uri("https://stock-serice-bbf0ere3aveye6cr.canadacentral-01.azurewebsites.net/");
+    client.BaseAddress = new Uri("https://stock-service-analytica-manulife-gze6hdbzg7b9hphs.canadacentral-01.azurewebsites.net/");
 });
 
 // Register custom services
