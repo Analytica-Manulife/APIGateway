@@ -57,5 +57,16 @@ namespace ApiGateway.Controllers
         {
             return Ok(_sessionService.IsLoggedIn() ? "User is logged in." : "User is not logged in.");
         }
+        
+        [HttpPost("insert-kyc")]
+        public async Task<IActionResult> InsertKyc([FromBody] KycInsertRequest request)
+        {
+            var (success, message) = await _authService.InsertKycAsync(request.Kyc, request.AccountId, request.RecordDate);
+            if (!success)
+                return BadRequest(message);
+
+            return Ok(message);
+        }
+
     }
 }

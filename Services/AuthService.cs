@@ -1,3 +1,4 @@
+using APIGateWay.Model;
 using ApiGateway.Repositories;
 using ApiGateway.Services;
 
@@ -29,5 +30,11 @@ namespace ApiGateway.Services
             _sessionService.Login(account.Email);
             return (true, "Login successful", account.Email, account.Name, account.Balance, account.AccountId);
         }
+        public async Task<(bool Success, string Message)> InsertKycAsync(KycModel model, string accountId, DateTime recordDate)
+        {
+            var result = await _repository.InsertKycAsync(model, accountId, recordDate);
+            return result ? (true, "KYC inserted successfully") : (false, "Failed to insert KYC");
+        }
+
     }
 }
