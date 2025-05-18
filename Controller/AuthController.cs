@@ -61,12 +61,25 @@ namespace ApiGateway.Controllers
         [HttpPost("insert-kyc")]
         public async Task<IActionResult> InsertKyc([FromBody] KycInsertRequest request)
         {
+            // Fix DateOfBirth if invalid (e.g., MinValue or out of SQL range)
+            if (request.Kyc.DateOfBirth < new DateTime(1753, 1, 1) || request.Kyc.DateOfBirth > new DateTime(9999, 12, 31))
+            {
+                request.Kyc.DateOfBirth = DateTime.Today;
+            }
+
+            // Also validate RecordDate (as before)
+            if (request.RecordDate < new DateTime(1753, 1, 1) || request.RecordDate > new DateTime(9999, 12, 31))
+            {
+                request.RecordDate = DateTime.Now;
+            }
+
             var (success, message) = await _authService.InsertKycAsync(request.Kyc, request.AccountId, request.RecordDate);
             if (!success)
                 return BadRequest(message);
 
             return Ok(message);
         }
+
 
     }
 }
